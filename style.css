@@ -123,3 +123,47 @@ th, td {
   border: 1px solid #ddd;
   padding: 10px;
 }
+  .inventory-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.inventory-table th,
+.inventory-table td {
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.inventory-table th {
+  background: #f3f4f6;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.edit-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
