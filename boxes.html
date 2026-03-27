@@ -1,46 +1,48 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<script src="auth.js"></script>
-<script>
-  (async () => {
-    const user = await getUser();
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  })();
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Boxes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Box Inventory - MoveMate</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <main class="container">
+    <div class="card" style="margin-top: 40px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:20px; flex-wrap: wrap;">
+        <div>
+          <h1>Box Inventory</h1>
+          <p>Add, edit, and manage your moving boxes.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <a href="index.html" class="menu-btn" style="text-decoration:none;">Home</a>
+          <button id="logout-btn" type="button">Log out</button>
+        </div>
+      </div>
 
-  <a href="index.html">⬅ Back</a>
+      <form id="box-form" class="form-stack">
+        <input type="text" id="box-room" placeholder="Room (e.g. Kitchen)" required />
+        <input type="text" id="box-items" placeholder="Contents (e.g. Plates, mugs)" required />
+        <button type="submit" id="box-submit-btn">Add Box</button>
+      </form>
 
-  <div class="container">
-    <h1>Box Inventory</h1>
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>Box #</th>
+            <th>Room</th>
+            <th>Contents</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="box-table-body"></tbody>
+      </table>
+    </div>
+  </main>
 
-    <form id="box-form">
-      <input id="box-room" placeholder="Room" />
-      <input id="box-items" placeholder="Contents" />
-      <button>Add Box</button>
-    </form>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Box #</th>
-          <th>Room</th>
-          <th>Contents</th>
-        </tr>
-      </thead>
-      <tbody id="box-table"></tbody>
-    </table>
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
   <script src="boxes.js"></script>
 </body>
 </html>
