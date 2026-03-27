@@ -1,33 +1,59 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<script src="auth.js"></script>
-<script>
-  (async () => {
-    const user = await getUser();
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  })();
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MoveMate</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <main class="app-shell">
+    <section class="hero-section">
+      <div class="hero-copy">
+        <span class="eyebrow">Smart Moving Planner</span>
+        <h1>MoveMate</h1>
+        <p>
+          Organise your move with a clear checklist, structured box inventory,
+          and a live moving budget synced across your devices.
+        </p>
+        <div class="hero-actions">
+          <a href="checklist.html" class="btn btn-primary">Open Dashboard</a>
+          <a href="login.html" class="btn btn-secondary">Account</a>
+        </div>
+      </div>
 
-  <div class="container center">
-    <h1>MoveMate</h1>
-    <p>Your moving planner</p>
+      <div class="hero-panel">
+        <div class="hero-card">
+          <h3>Everything in one place</h3>
+          <ul class="feature-list">
+            <li>Track every moving task</li>
+            <li>Manage and edit your boxes</li>
+            <li>Monitor your full budget</li>
+            <li>Access updated data anywhere</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-    <div class="menu">
-      <a href="checklist.html" class="menu-btn">Moving Checklist</a>
-      <a href="boxes.html" class="menu-btn">Box Inventory</a>
-      <a href="budget.html" class="menu-btn">Moving Budget</a>
-    </div>
-  </div>
+    <section class="dashboard-grid">
+      <a href="checklist.html" class="dashboard-card">
+        <div class="card-icon">✓</div>
+        <h2>Moving Checklist</h2>
+        <p>Create tasks, mark them complete, and stay on top of your move.</p>
+      </a>
 
+      <a href="boxes.html" class="dashboard-card">
+        <div class="card-icon">📦</div>
+        <h2>Box Inventory</h2>
+        <p>Log every box with its room and contents in a structured table.</p>
+      </a>
+
+      <a href="budget.html" class="dashboard-card">
+        <div class="card-icon">£</div>
+        <h2>Moving Budget</h2>
+        <p>Track expenses, edit entries, and keep your moving costs under control.</p>
+      </a>
+    </section>
+  </main>
 </body>
 </html>
