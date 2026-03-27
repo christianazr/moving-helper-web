@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Boxes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a href="index.html">⬅ Back</a>
+
+  <div class="container">
+    <h1>Box Inventory</h1>
+
+    <form id="box-form">
+      <input id="box-room" placeholder="Room" />
+      <input id="box-items" placeholder="Contents" />
+      <button>Add Box</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Box #</th>
+          <th>Room</th>
+          <th>Contents</th>
+        </tr>
+      </thead>
+      <tbody id="box-table"></tbody>
+    </table>
+  </div>
+
+  <script src="boxes.js"></script>
+</body>
+</html>
