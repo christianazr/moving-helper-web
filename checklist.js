@@ -5,13 +5,14 @@ const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
 
 async function init() {
-  user = await getUser();
+  const { data } = await supabaseClient.auth.getSession();
 
-  if (!user) {
+  if (!data.session) {
     await signIn();
     return;
   }
 
+  user = data.session.user;
   loadTasks();
 }
 
