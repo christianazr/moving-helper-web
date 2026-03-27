@@ -68,7 +68,7 @@ button:hover {
 }
 
 .total-row {
-  margin-top: 16px;
+  margin: 16px 0 8px;
   display: flex;
   justify-content: space-between;
   font-size: 1.1rem;
