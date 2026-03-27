@@ -1,18 +1,18 @@
 async function signIn() {
   const email = prompt("Enter your email:");
-  
-  const { data, error } = await supabaseClient.auth.signInWithOtp({
+
+  const { error } = await supabaseClient.auth.signInWithOtp({
     email: email,
   });
 
   if (error) {
-    alert("Error logging in");
+    alert("Error sending magic link");
   } else {
-    alert("Check your email for login link");
+    alert("Check your email");
   }
 }
 
 async function getUser() {
-  const { data } = await supabaseClient.auth.getUser();
-  return data.user;
+  const { data, error } = await supabaseClient.auth.getSession();
+  return data.session?.user || null;
 }
