@@ -8,30 +8,65 @@
 </head>
 <body>
   <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">Smart Moving Planner</span>
+        <h1 class="topbar-title">MoveMate</h1>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="checklist.html" class="menu-btn" style="text-decoration:none;">Checklist</a>
+        <a href="boxes.html" class="menu-btn" style="text-decoration:none;">Boxes</a>
+        <a href="budget.html" class="menu-btn" style="text-decoration:none;">Budget</a>
+        <button id="logout-btn" type="button">Log out</button>
+      </div>
+    </header>
+
     <section class="hero-section">
       <div class="hero-copy">
-        <span class="eyebrow">Smart Moving Planner</span>
-        <h1>MoveMate</h1>
+        <span class="eyebrow">Your Moving Dashboard</span>
+        <h1>Plan your move with clarity.</h1>
         <p>
-          Organise your move with a clear checklist, structured box inventory,
-          and a live moving budget synced across your devices.
+          Keep track of your checklist, organise every box, and monitor your
+          moving costs across all your devices.
         </p>
+
         <div class="hero-actions">
-          <a href="checklist.html" class="btn btn-primary">Open Dashboard</a>
-          <a href="login.html" class="btn btn-secondary">Account</a>
+          <a href="checklist.html" class="btn btn-primary">Open Checklist</a>
+          <a href="boxes.html" class="btn btn-secondary">Manage Boxes</a>
         </div>
       </div>
 
       <div class="hero-panel">
         <div class="hero-card">
-          <h3>Everything in one place</h3>
+          <h3>Live Overview</h3>
           <ul class="feature-list">
-            <li>Track every moving task</li>
-            <li>Manage and edit your boxes</li>
-            <li>Monitor your full budget</li>
-            <li>Access updated data anywhere</li>
+            <li><strong id="summary-completed">0</strong> tasks completed</li>
+            <li><strong id="summary-total-tasks">0</strong> total tasks</li>
+            <li><strong id="summary-boxes">0</strong> boxes registered</li>
+            <li><strong id="summary-budget">£0.00</strong> moving budget</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Checklist Progress</span>
+        <div class="stat-value" id="stat-progress">0 / 0</div>
+        <p class="stat-text">Completed tasks out of total tasks.</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-label">Boxes Logged</span>
+        <div class="stat-value" id="stat-boxes">0</div>
+        <p class="stat-text">Total number of boxes currently saved.</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-label">Budget Total</span>
+        <div class="stat-value" id="stat-budget">£0.00</div>
+        <p class="stat-text">Current total of all moving expenses.</p>
       </div>
     </section>
 
@@ -55,5 +90,10 @@
       </a>
     </section>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
