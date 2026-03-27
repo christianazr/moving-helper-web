@@ -1,38 +1,42 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<script src="auth.js"></script>
-<script>
-  (async () => {
-    const user = await getUser();
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  })();
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Checklist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moving Checklist - MoveMate</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <main class="container">
+    <div class="card" style="margin-top: 40px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:20px;">
+        <div>
+          <h1>Moving Checklist</h1>
+          <p>Add, complete, and manage your moving tasks.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <a href="index.html" class="menu-btn" style="text-decoration:none;">Home</a>
+          <button id="logout-btn" type="button">Log out</button>
+        </div>
+      </div>
 
-  <a href="index.html">⬅ Back</a>
+      <form id="task-form" class="form-row">
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Add a moving task..."
+          required
+        />
+        <button type="submit">Add</button>
+      </form>
 
-  <div class="container">
-    <h1>Moving Checklist</h1>
+      <ul id="task-list" class="list"></ul>
+    </div>
+  </main>
 
-    <form id="task-form">
-      <input id="task-input" placeholder="Add task..." />
-      <button>Add</button>
-    </form>
-
-    <ul id="task-list"></ul>
-  </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
-<script src="auth.js"></script>
+  <script src="auth.js"></script>
   <script src="checklist.js"></script>
 </body>
 </html>
