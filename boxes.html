@@ -13,7 +13,7 @@
         <div>
           <span class="eyebrow">MoveMate Workspace</span>
           <h1>Box Inventory</h1>
-          <p>Add, edit, and organise every moving box in one place.</p>
+          <p>Add, edit, search, and organise every moving box in one place.</p>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <a href="index.html" class="menu-btn" style="text-decoration:none;">Home</a>
@@ -28,6 +28,18 @@
         <input type="text" id="box-items" placeholder="Contents (e.g. Plates, mugs)" required />
         <button type="submit" id="box-submit-btn">Add Box</button>
       </form>
+
+      <div class="filters-row">
+        <input
+          type="text"
+          id="box-search"
+          placeholder="Search by room or contents..."
+        />
+
+        <select id="room-filter">
+          <option value="all">All rooms</option>
+        </select>
+      </div>
 
       <table class="inventory-table">
         <thead>
