@@ -35,6 +35,17 @@
           <a href="checklist.html" class="btn btn-primary">Open Checklist</a>
           <a href="boxes.html" class="btn btn-secondary">Manage Boxes</a>
         </div>
+
+        <div class="progress-card">
+          <div class="progress-header">
+            <span>Checklist Progress</span>
+            <strong id="progress-text">0%</strong>
+          </div>
+          <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+          <p class="progress-subtext" id="progress-subtext">0 of 0 tasks completed</p>
+        </div>
       </div>
 
       <div class="hero-panel">
@@ -88,6 +99,30 @@
         <h2>Moving Budget</h2>
         <p>Track expenses, edit entries, and keep your moving costs under control.</p>
       </a>
+    </section>
+
+    <section class="insights-grid">
+      <div class="card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Recent Activity</span>
+            <h2>Latest Tasks</h2>
+          </div>
+          <a href="checklist.html" class="text-link">View all</a>
+        </div>
+        <ul id="recent-tasks" class="mini-list"></ul>
+      </div>
+
+      <div class="card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Recent Activity</span>
+            <h2>Latest Boxes</h2>
+          </div>
+          <a href="boxes.html" class="text-link">View all</a>
+        </div>
+        <ul id="recent-boxes" class="mini-list"></ul>
+      </div>
     </section>
   </main>
 
