@@ -7,23 +7,34 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="container">
-    <div class="card" style="max-width: 420px; margin: 60px auto;">
-      <h1>MoveMate</h1>
-      <p>Sign in to access your moving planner.</p>
-
-      <form id="auth-form" class="form-stack">
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="submit">Sign In</button>
-      </form>
-
-      <div style="margin-top: 12px; display: flex; gap: 10px;">
-        <button id="signup-btn" type="button">Create Account</button>
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="auth-header">
+        <span class="eyebrow">Welcome back</span>
+        <h1>MoveMate</h1>
+        <p>Sign in to manage your move from any device.</p>
       </div>
 
-      <p id="auth-message" style="margin-top: 12px;"></p>
-    </div>
+      <form id="auth-form" class="form-stack">
+        <label class="field-label" for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+
+        <label class="field-label" for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
+
+        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+      </form>
+
+      <div class="auth-actions">
+        <button id="signup-btn" type="button" class="btn btn-secondary btn-full">
+          Create Account
+        </button>
+      </div>
+
+      <p id="auth-message" class="auth-message"></p>
+
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -41,6 +52,7 @@
       const password = document.getElementById("password").value;
 
       const user = await signInWithPassword(email, password);
+
       if (user) {
         window.location.href = "index.html";
       } else {
@@ -53,13 +65,14 @@
       const password = document.getElementById("password").value;
 
       if (!email || !password) {
-        message.textContent = "Enter email and password first.";
+        message.textContent = "Enter your email and password first.";
         return;
       }
 
       const user = await signUpWithPassword(email, password);
+
       if (user) {
-        message.textContent = "Account created. Now sign in.";
+        message.textContent = "Account created successfully. You can now sign in.";
       }
     });
   </script>
