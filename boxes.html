@@ -26,6 +26,13 @@
       <form id="box-form" class="form-stack">
         <input type="text" id="box-room" placeholder="Room (e.g. Kitchen)" required />
         <input type="text" id="box-items" placeholder="Contents (e.g. Plates, mugs)" required />
+
+        <select id="box-status" required>
+          <option value="Packed">Packed</option>
+          <option value="Unpacked">Unpacked</option>
+          <option value="Fragile">Fragile</option>
+        </select>
+
         <button type="submit" id="box-submit-btn">Add Box</button>
       </form>
 
@@ -33,7 +40,7 @@
         <input
           type="text"
           id="box-search"
-          placeholder="Search by room or contents..."
+          placeholder="Search by box number, room or contents..."
         />
 
         <select id="room-filter">
@@ -47,6 +54,7 @@
             <th>Box #</th>
             <th>Room</th>
             <th>Contents</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
