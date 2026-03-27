@@ -5,6 +5,7 @@ let allBoxes = [];
 const form = document.getElementById("box-form");
 const roomInput = document.getElementById("box-room");
 const itemsInput = document.getElementById("box-items");
+const statusInput = document.getElementById("box-status");
 const submitBtn = document.getElementById("box-submit-btn");
 const tableBody = document.getElementById("box-table-body");
 const logoutBtn = document.getElementById("logout-btn");
@@ -79,12 +80,19 @@ function applyFilters() {
   renderBoxes(filteredBoxes);
 }
 
+function getStatusBadgeClass(status) {
+  if (status === "Packed") return "status-badge done";
+  if (status === "Unpacked") return "status-badge pending";
+  if (status === "Fragile") return "status-badge fragile";
+  return "status-badge neutral";
+}
+
 function renderBoxes(boxes) {
   tableBody.innerHTML = "";
 
   if (!boxes.length) {
     const row = document.createElement("tr");
-    row.innerHTML = `<td colspan="4">No boxes match your search or filter.</td>`;
+    row.innerHTML = `<td colspan="5">No boxes match your search or filter.</td>`;
     tableBody.appendChild(row);
     return;
   }
@@ -101,6 +109,12 @@ function renderBoxes(boxes) {
     const itemsCell = document.createElement("td");
     itemsCell.textContent = box.items;
 
+    const statusCell = document.createElement("td");
+    const statusBadge = document.createElement("span");
+    statusBadge.className = getStatusBadgeClass(box.status);
+    statusBadge.textContent = box.status || "Packed";
+    statusCell.appendChild(statusBadge);
+
     const actionsCell = document.createElement("td");
     actionsCell.className = "table-actions";
 
@@ -112,6 +126,7 @@ function renderBoxes(boxes) {
       editingBoxId = box.id;
       roomInput.value = box.room;
       itemsInput.value = box.items;
+      statusInput.value = box.status || "Packed";
       submitBtn.textContent = "Update Box";
       roomInput.focus();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -150,6 +165,7 @@ function renderBoxes(boxes) {
     row.appendChild(boxNumberCell);
     row.appendChild(roomCell);
     row.appendChild(itemsCell);
+    row.appendChild(statusCell);
     row.appendChild(actionsCell);
 
     tableBody.appendChild(row);
@@ -159,6 +175,7 @@ function renderBoxes(boxes) {
 function resetForm() {
   editingBoxId = null;
   form.reset();
+  statusInput.value = "Packed";
   submitBtn.textContent = "Add Box";
 }
 
@@ -187,8 +204,9 @@ form.addEventListener("submit", async (e) => {
 
   const roomValue = roomInput.value.trim();
   const itemsValue = itemsInput.value.trim();
+  const statusValue = statusInput.value;
 
-  if (!roomValue || !itemsValue) return;
+  if (!roomValue || !itemsValue || !statusValue) return;
 
   if (editingBoxId) {
     const { error } = await supabaseClient
@@ -196,6 +214,7 @@ form.addEventListener("submit", async (e) => {
       .update({
         room: roomValue,
         items: itemsValue,
+        status: statusValue,
       })
       .eq("id", editingBoxId)
       .eq("user_id", user.id);
@@ -223,6 +242,7 @@ form.addEventListener("submit", async (e) => {
           box_number: nextBoxNumber,
           room: roomValue,
           items: itemsValue,
+          status: statusValue,
         },
       ]);
 
@@ -253,5 +273,6 @@ logoutBtn.addEventListener("click", async () => {
     return;
   }
 
+  statusInput.value = "Packed";
   loadBoxes();
 })();
