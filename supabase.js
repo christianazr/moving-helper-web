@@ -8,7 +8,7 @@ const supabaseClient = supabase.createClient(
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      detectSessionInUrl: true // 🔥 CLAVE
+      detectSessionInUrl: true //
     }
   }
 );
