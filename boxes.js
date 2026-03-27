@@ -1,5 +1,6 @@
 let user = null;
 let editingBoxId = null;
+let allBoxes = [];
 
 const form = document.getElementById("box-form");
 const roomInput = document.getElementById("box-room");
@@ -7,6 +8,9 @@ const itemsInput = document.getElementById("box-items");
 const submitBtn = document.getElementById("box-submit-btn");
 const tableBody = document.getElementById("box-table-body");
 const logoutBtn = document.getElementById("logout-btn");
+
+const searchInput = document.getElementById("box-search");
+const roomFilter = document.getElementById("room-filter");
 
 async function loadBoxes() {
   const { data, error } = await supabaseClient
@@ -21,7 +25,56 @@ async function loadBoxes() {
     return;
   }
 
-  renderBoxes(data || []);
+  allBoxes = data || [];
+  populateRoomFilter(allBoxes);
+  applyFilters();
+}
+
+function populateRoomFilter(boxes) {
+  const uniqueRooms = [...new Set(
+    boxes
+      .map((box) => (box.room || "").trim())
+      .filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b));
+
+  const currentValue = roomFilter.value;
+
+  roomFilter.innerHTML = `<option value="all">All rooms</option>`;
+
+  uniqueRooms.forEach((room) => {
+    const option = document.createElement("option");
+    option.value = room.toLowerCase();
+    option.textContent = room;
+    roomFilter.appendChild(option);
+  });
+
+  const stillExists =
+    currentValue === "all" ||
+    uniqueRooms.some((room) => room.toLowerCase() === currentValue);
+
+  roomFilter.value = stillExists ? currentValue : "all";
+}
+
+function applyFilters() {
+  const searchValue = searchInput.value.trim().toLowerCase();
+  const selectedRoom = roomFilter.value;
+
+  const filteredBoxes = allBoxes.filter((box) => {
+    const roomText = (box.room || "").toLowerCase();
+    const itemsText = (box.items || "").toLowerCase();
+
+    const matchesSearch =
+      !searchValue ||
+      roomText.includes(searchValue) ||
+      itemsText.includes(searchValue);
+
+    const matchesRoom =
+      selectedRoom === "all" || roomText === selectedRoom;
+
+    return matchesSearch && matchesRoom;
+  });
+
+  renderBoxes(filteredBoxes);
 }
 
 function renderBoxes(boxes) {
@@ -29,7 +82,7 @@ function renderBoxes(boxes) {
 
   if (!boxes.length) {
     const row = document.createElement("tr");
-    row.innerHTML = `<td colspan="4">No boxes yet. Add your first box.</td>`;
+    row.innerHTML = `<td colspan="4">No boxes match your search or filter.</td>`;
     tableBody.appendChild(row);
     return;
   }
@@ -59,6 +112,7 @@ function renderBoxes(boxes) {
       itemsInput.value = box.items;
       submitBtn.textContent = "Update Box";
       roomInput.focus();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     const deleteBtn = document.createElement("button");
@@ -150,6 +204,9 @@ form.addEventListener("submit", async (e) => {
   resetForm();
   loadBoxes();
 });
+
+searchInput.addEventListener("input", applyFilters);
+roomFilter.addEventListener("change", applyFilters);
 
 logoutBtn.addEventListener("click", async () => {
   await signOutUser();
