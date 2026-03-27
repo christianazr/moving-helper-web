@@ -711,3 +711,7 @@ select:focus {
     grid-template-columns: 1fr;
   }
 }
+.status-badge.fragile {
+  background: #fee2e2;
+  color: #991b1b;
+}
