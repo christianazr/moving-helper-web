@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoveMate</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1>MoveMate</h1>
+      <p>Your simple moving planner for tasks, boxes, and budget.</p>
+    </div>
+  </header>
+
+  <main class="container grid">
+    <section class="card">
+      <h2>Moving Checklist</h2>
+      <form id="task-form" class="form-row">
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Add a moving task..."
+          required
+        />
+        <button type="submit">Add</button>
+      </form>
+      <ul id="task-list" class="list"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Box Inventory</h2>
+      <form id="box-form" class="form-stack">
+        <input type="text" id="box-room" placeholder="Room (e.g. Kitchen)" required />
+        <input type="text" id="box-items" placeholder="Contents (e.g. Plates, mugs)" required />
+        <button type="submit">Add Box</button>
+      </form>
+      <ul id="box-list" class="list"></ul>
+    </section>
+
+    <section class="card full-width">
+      <h2>Moving Budget</h2>
+      <form id="budget-form" class="form-row">
+        <input type="text" id="budget-name" placeholder="Expense name" required />
+        <input type="number" id="budget-amount" placeholder="Amount" min="0" step="0.01" required />
+        <button type="submit">Add</button>
+      </form>
+      <ul id="budget-list" class="list"></ul>
+      <div class="total-row">
+        <strong>Total:</strong>
+        <span id="budget-total">£0.00</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <button id="clear-all" class="danger">Clear All Data</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
