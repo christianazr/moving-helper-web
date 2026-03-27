@@ -17,7 +17,7 @@ async function loadBoxes() {
     .from("boxes")
     .select("*")
     .eq("user_id", user.id)
-    .order("id", { ascending: true });
+    .order("box_number", { ascending: true });
 
   if (error) {
     console.error("Error loading boxes:", error);
@@ -62,11 +62,13 @@ function applyFilters() {
   const filteredBoxes = allBoxes.filter((box) => {
     const roomText = (box.room || "").toLowerCase();
     const itemsText = (box.items || "").toLowerCase();
+    const boxNumberText = String(box.box_number || "");
 
     const matchesSearch =
       !searchValue ||
       roomText.includes(searchValue) ||
-      itemsText.includes(searchValue);
+      itemsText.includes(searchValue) ||
+      boxNumberText.includes(searchValue);
 
     const matchesRoom =
       selectedRoom === "all" || roomText === selectedRoom;
@@ -87,11 +89,11 @@ function renderBoxes(boxes) {
     return;
   }
 
-  boxes.forEach((box, index) => {
+  boxes.forEach((box) => {
     const row = document.createElement("tr");
 
     const boxNumberCell = document.createElement("td");
-    boxNumberCell.textContent = index + 1;
+    boxNumberCell.textContent = box.box_number ?? "-";
 
     const roomCell = document.createElement("td");
     roomCell.textContent = box.room;
@@ -120,7 +122,7 @@ function renderBoxes(boxes) {
     deleteBtn.textContent = "Delete";
     deleteBtn.className = "delete-btn";
     deleteBtn.addEventListener("click", async () => {
-      const confirmed = confirm("Are you sure you want to delete this box?");
+      const confirmed = confirm(`Are you sure you want to delete Box ${box.box_number}?`);
       if (!confirmed) return;
 
       const { error } = await supabaseClient
@@ -160,6 +162,26 @@ function resetForm() {
   submitBtn.textContent = "Add Box";
 }
 
+async function getNextBoxNumber() {
+  const { data, error } = await supabaseClient
+    .from("boxes")
+    .select("box_number")
+    .eq("user_id", user.id)
+    .order("box_number", { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error("Error getting next box number:", error);
+    throw error;
+  }
+
+  if (!data || data.length === 0 || data[0].box_number == null) {
+    return 1;
+  }
+
+  return Number(data[0].box_number) + 1;
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -184,11 +206,21 @@ form.addEventListener("submit", async (e) => {
       return;
     }
   } else {
+    let nextBoxNumber;
+
+    try {
+      nextBoxNumber = await getNextBoxNumber();
+    } catch (error) {
+      alert("Error creating box number: " + error.message);
+      return;
+    }
+
     const { error } = await supabaseClient
       .from("boxes")
       .insert([
         {
           user_id: user.id,
+          box_number: nextBoxNumber,
           room: roomValue,
           items: itemsValue,
         },
