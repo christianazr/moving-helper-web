@@ -1,14 +1,30 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let user = null;
 
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
 
-function save() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+async function init() {
+  user = await getUser();
+
+  if (!user) {
+    await signIn();
+    return;
+  }
+
+  loadTasks();
 }
 
-function render() {
+async function loadTasks() {
+  const { data } = await supabaseClient
+    .from("tasks")
+    .select("*")
+    .eq("user_id", user.id);
+
+  render(data);
+}
+
+function render(tasks) {
   list.innerHTML = "";
 
   tasks.forEach(task => {
@@ -16,12 +32,15 @@ function render() {
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.checked = task.done;
+    checkbox.checked = task.completed;
 
-    checkbox.onchange = () => {
-      task.done = checkbox.checked;
-      save();
-      render();
+    checkbox.onchange = async () => {
+      await supabaseClient
+        .from("tasks")
+        .update({ completed: checkbox.checked })
+        .eq("id", task.id);
+
+      loadTasks();
     };
 
     const text = document.createElement("span");
@@ -33,17 +52,19 @@ function render() {
   });
 }
 
-form.onsubmit = (e) => {
+form.onsubmit = async (e) => {
   e.preventDefault();
 
-  tasks.push({
-    text: input.value,
-    done: false
-  });
+  await supabaseClient.from("tasks").insert([
+    {
+      text: input.value,
+      completed: false,
+      user_id: user.id
+    }
+  ]);
 
   input.value = "";
-  save();
-  render();
+  loadTasks();
 };
 
-render();
+init();
